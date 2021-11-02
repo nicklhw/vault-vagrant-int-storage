@@ -16,8 +16,9 @@ readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly TMP_DIR="/tmp/install"
 readonly SCRIPT_NAME="$(basename "$0")"
 readonly SUPPLIED_VAULT_BIN="vault"
+readonly DEFAULT_VAULT_LICENSE="vault.hclic"
 
-readonly VAULT_VERSION="1.1.3"
+readonly VAULT_VERSION="1.8.2"
 
 function print_usage {
   echo
@@ -103,6 +104,7 @@ function create_vault_install_paths {
   local -r node="$4"
   local -r ip="$5"
   local -r storage_path="$6"
+  local -r license="$7"
 
   log "INFO" ${func} "Creating install dirs for Vault at ${path}"
   log "INFO" ${func} "username = ${username}, config = ${config}"
@@ -125,10 +127,13 @@ cluster_addr = "https://${ip}:8201"
 api_addr = "http://${ip}:8200"
 ui = true
 
+license_path = "${path}${license}"
 EOF
 
   sudo cp ${TMP_DIR}/outy ${path}${config}
   sudo chmod 640 ${path}${config}
+  log "INFO" ${func} "Copying vault license ${license} to ${path}"
+  sudo cp /vagrant/${license} ${path}
   log "INFO" ${func} "Changing ownership of ${path} to ${username}"
   sudo chown -R "${username}:${username}" "${path}"
   sudo chown -R "${username}:${username}" "${storage_path}"
@@ -191,7 +196,7 @@ function main {
   install_dependencies
   create_vault_user "${DEFAULT_VAULT_USER}"
   install_vault "${DEFAULT_INSTALL_PATH}" "${TMP_DIR}" "$SUPPLIED_VAULT_BIN"
-  create_vault_install_paths "${DEFAULT_VAULT_PATH}" "${DEFAULT_VAULT_USER}" "${DEFAULT_VAULT_CONFIG}" "${node}" "${ip}" "${DEFAULT_VAULT_STORAGE}"
+  create_vault_install_paths "${DEFAULT_VAULT_PATH}" "${DEFAULT_VAULT_USER}" "${DEFAULT_VAULT_CONFIG}" "${node}" "${ip}" "${DEFAULT_VAULT_STORAGE}" "${DEFAULT_VAULT_LICENSE}"
   create_vault_service "${DEFAULT_VAULT_SERVICE}"
   log "INFO" "${func}" "Vault install complete!"
   sudo rm -rf "${TMP_DIR}"

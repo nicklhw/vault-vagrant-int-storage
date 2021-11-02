@@ -16,6 +16,9 @@ echo "Token:""$(grep Token $INIT_OUT | cut -d' ' -f4)" >> $VAULT_TXT
 
 # Unseal Vault
 vault operator unseal "$(cat $VAULT_TXT | grep Unseal | cut -f2 -d':')"
+
+sleep 5
+
 vault login "$(cat $VAULT_TXT | grep Token | cut -f2 -d':')"
-vault write sys/license text="$(cat licence.txt)"
+# vault write sys/license text="$(cat licence.txt)"
 chown vagrant /home/vagrant/.vault-token
