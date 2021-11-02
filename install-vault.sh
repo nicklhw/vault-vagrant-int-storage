@@ -1,6 +1,6 @@
 #!/bin/bash
 # This script can be used to install Vault as per the deployment guide:
-# https://www.vaultproject.io/guides/operations/deployment-guide.html
+# https://learn.hashicorp.com/tutorials/vault/raft-deployment-guide?in=vault/day-one-raft
 
 # takes a supplied vault bin and installs and configures
 
