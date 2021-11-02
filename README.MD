@@ -5,7 +5,7 @@ This initial repo uses shamir key shards as unseal type.
 ## Instructions
 1. Download repo
 1. Make sure the vagrant private network does not clash with any you have running
-1. Download [vault binary](https://releases.hashicorp.com/vault/) and place it in the root of the repo with the fie name `vault`
+1. Run `download-vault.sh` to download [vault binary](https://releases.hashicorp.com/vault/) and place it in the root of the repo with the fie name `vault`
 1. For vault enterprise, get a trial license and place the license file in the root of the repo with the file name `vault.hclic`
 1. Run vagrant up
 1. vagrant ssh vault-server-1
