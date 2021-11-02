@@ -3,7 +3,7 @@
 vault
 consul
 .git
-.zip
+*.zip
 vault.hclic
 EULA.txt
 TermsOfEvaluation.txt
